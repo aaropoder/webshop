@@ -1,0 +1,18 @@
+.navbar {
+  height: 100px;
+  background: linear-gradient(180deg, lightyellow, white);
+  border-bottom: 1px solid grey;
+}
+
+.navbar img {
+  height: 100px;
+}
+
+.footer {
+  height: 100px;
+  background: linear-gradient(180deg, white, lightyellow);
+  border-top: 1px solid grey;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
