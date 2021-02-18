@@ -1,0 +1,13 @@
+.item {
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px solid black;
+}
+
+.item div {
+  border: 1px solid red;
+}
+
+.item img {
+  border: 1px solid red;
+}

@@ -2,17 +2,42 @@
   height: 100px;
   background: linear-gradient(180deg, lightyellow, white);
   border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar img {
   height: 100px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.cart-button {
+  background-color: lightsalmon;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.cart-button img {
+  height: 50px;
+  width: 50px;
+}
+
+.cart-button span {
+  color: white;
+}
+
+.cart-button:hover span {
+  color: yellow;
 }
 
 .footer {
   height: 100px;
   background: linear-gradient(180deg, white, lightyellow);
   border-top: 1px solid grey;
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
+  position: relative;
   width: 100%;
 }
