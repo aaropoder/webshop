@@ -1,1 +1,10 @@
-<p>SEE ON UUE LEHE SISU</p>
+<div class="item" *ngFor="let item of cartItems; let ilmar = index">
+  <!-- string interpolation - lahe loogelise sulu vahel muutuja kasutajale näitamine -->
+  <div>{{ item.title }}</div>
+  <div>{{ item.price }}</div>
+  <div>{{ item.category }}</div>
+  <img src="{{ item.imgSrc }}" />
+  <!-- event binding - ümar sulgude vahel sündmusele kasutusele võtmine -->
+  <!-- <div (click)="onAddToCart()" class="">Lisa ostukorvi</div> -->
+  <div (click)="onDeleteFromCart(ilmar)">X</div>
+</div>

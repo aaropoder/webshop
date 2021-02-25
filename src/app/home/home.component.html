@@ -1,9 +1,9 @@
 <!-- {{ items | json  }} -->
 
 <div class="item" *ngFor="let item of items">
-    <div>{{ item.title }}</div>
-    <div>{{ item.price }}</div>
-    <div>{{ item.category }}</div>
-    <img src="{{ item.imgSrc }}">
-    <div (click)="onAddToCart()" class="">Lisa ostukorvi</div>
+  <div>{{ item.title }}</div>
+  <div>{{ item.price }}</div>
+  <div>{{ item.category }}</div>
+  <img src="{{ item.imgSrc }}" />
+  <div (click)="onAddToCart(item)" class="">Lisa ostukorvi</div>
 </div>

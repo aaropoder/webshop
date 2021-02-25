@@ -1,13 +1,15 @@
 .item {
   display: flex;
-  justify-content: space-evenly;
-  border: 1px solid black;
+  justify-content: center;
 }
 
 .item div {
-  border: 1px solid red;
+  height: 200px;
+  width: 200px;
+  text-align: center;
 }
 
 .item img {
-  border: 1px solid red;
+  height: 200px;
+  width: 200px;
 }
