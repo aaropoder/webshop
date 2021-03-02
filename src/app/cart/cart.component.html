@@ -1,10 +1,22 @@
+<div (click)="onEmptyCart()" *ngIf="cartItems.length > 0">
+  Tühjenda ostukorv
+</div>
+
 <div class="item" *ngFor="let item of cartItems; let ilmar = index">
-  <!-- string interpolation - lahe loogelise sulu vahel muutuja kasutajale näitamine -->
+  <!-- String interpolation - kahe loogelise sulu vahel muutuja kasutajale näitamine -->
   <div>{{ item.title }}</div>
   <div>{{ item.price }}</div>
   <div>{{ item.category }}</div>
   <img src="{{ item.imgSrc }}" />
-  <!-- event binding - ümar sulgude vahel sündmusele kasutusele võtmine -->
-  <!-- <div (click)="onAddToCart()" class="">Lisa ostukorvi</div> -->
+  <!-- Event binding - ümar sulgude vahel sündmuse kasutusele võtmine -->
   <div (click)="onDeleteFromCart(ilmar)">X</div>
+</div>
+
+<div class="sum-of-cart" *ngIf="cartItems.length > 0">
+  SUMMA: {{ sumOfCart.toFixed(2) }} €
+</div>
+
+<div class="empty-cart" *ngIf="cartItems.length == 0">
+  <img src="//unsplash.it/100/100" alt="" />
+  <div>Ostukorv on tühi</div>
 </div>

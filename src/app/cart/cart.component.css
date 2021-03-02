@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  justify-content: center;
+}
+
+.item div {
+  height: 200px;
+  width: 200px;
+  text-align: center;
+}
+
+.item img {
+  height: 200px;
+  width: 200px;
+}
