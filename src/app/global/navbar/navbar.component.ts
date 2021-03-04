@@ -11,6 +11,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private cartService: CartService) {}
 
+  // arrow function (items) => on justkui sama function(items) ehk ES6 ja ES5
+
   ngOnInit(): void {
     this.cartService.cartChanged.subscribe((items) => {
       this.cartSum = 0;

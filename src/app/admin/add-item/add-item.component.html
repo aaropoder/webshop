@@ -1,0 +1,16 @@
+<form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
+  <!-- <button type="button">?</button> -->
+  <label>Nimetus</label><br />
+  <input ngModel name="title" type="text" required /><br />
+
+  <label>Pilt</label><br />
+  <input ngModel name="imgSrc" type="text" required /><br />
+
+  <label>Hind</label><br />
+  <input ngModel name="price" type="text" required /><br />
+
+  <label>Kategooria</label><br />
+  <input ngModel name="category" type="text" required /><br />
+
+  <button [disabled]="addItemForm.invalid" type="submit">Sisesta toode</button>
+</form>
