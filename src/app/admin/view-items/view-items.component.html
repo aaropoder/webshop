@@ -2,6 +2,8 @@
   <div>{{ item.title }}</div>
   <div>{{ item.price }}</div>
   <div>{{ item.category }}</div>
+  <!-- kui kandilised sulud on routerLink ümber, siis peab ka paremal olema
+  iga komaga tekitatakse kaldkriips /  -->
   <button [routerLink]="['/admin/edit-item', i]">Muuda eset</button>
   <button (click)="onDeleteItem(i)">Kustuta ese</button>
 </div>

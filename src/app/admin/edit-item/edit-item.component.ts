@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Item } from 'src/app/models/item.model';
 import { ItemService } from 'src/app/services/item.service';
 
 @Component({
@@ -10,11 +12,37 @@ import { ItemService } from 'src/app/services/item.service';
 export class EditItemComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private router: Router
   ) {}
 
+  // item: Item | undefined (või tühi)
+  item!: Item;
+  editItemForm!: FormGroup;
+  id!: number;
+
   ngOnInit(): void {
-    let id = this.activatedRoute.snapshot.paramMap.get('itemId');
-    let toode = this.itemService.items[Number(id)];
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get('itemId'));
+    this.item = this.itemService.items[this.id];
+    this.editItemForm = new FormGroup({
+      title: new FormControl(this.item.title),
+      price: new FormControl(this.item.price),
+      imgSrc: new FormControl(this.item.imgSrc),
+      category: new FormControl(this.item.category),
+    });
+  }
+
+  onSubmit(form: FormGroup) {
+    if (form.valid) {
+      const item = new Item(
+        form.value.imgSrc,
+        form.value.title,
+        form.value.price,
+        form.value.category
+      );
+      this.itemService.items[this.id] = item;
+      this.itemService.saveItemsToDatabase();
+      this.router.navigateByUrl('/admin/view-items');
+    }
   }
 }

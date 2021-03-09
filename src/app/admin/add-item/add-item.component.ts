@@ -14,12 +14,10 @@ export class AddItemComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    console.log(form);
-    console.log(form.value);
+    // console.log(form);
+    // console.log(form.value);
     if (form.valid == true) {
-      console.log('Töötab!');
-      // valideerimine
-      let item = new Item(
+      const item = new Item(
         form.value.imgSrc,
         form.value.title,
         form.value.price,
@@ -27,6 +25,7 @@ export class AddItemComponent implements OnInit {
       );
       // this.itemService.items.push(form.value);
       this.itemService.items.push(item);
+      this.itemService.saveItemsToDatabase();
     }
   }
 }

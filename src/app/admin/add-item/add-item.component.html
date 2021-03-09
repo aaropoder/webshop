@@ -1,3 +1,8 @@
+<!-- shortcut form- (ngForm). nimi vaikimisi #form.  
+ngSubmit käivitub iga nupu vajutusega, kui mitu nuppu vaja hoida, siis teisteel panna teine tüüp
+onSubimit(siia vormi nimi, mis tähendab, et kogu vormi sisu antakse kaasa) #form
+ngModel seob vormiga ja vajab alti name -->
+
 <form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
   <!-- <button type="button">?</button> -->
   <label>Nimetus</label><br />
@@ -11,6 +16,6 @@
 
   <label>Kategooria</label><br />
   <input ngModel name="category" type="text" required /><br />
-
+  <!-- property binding - html atribuudi muutuvaks (dünaamiliseks) tegemine - kandiliste sulgude ümber panemine. Kui kandilised sulud, siis peab olema võrdusmärk ja avaldis -->
   <button [disabled]="addItemForm.invalid" type="submit">Sisesta toode</button>
 </form>
