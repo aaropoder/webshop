@@ -25,7 +25,8 @@ export class AddItemComponent implements OnInit {
       );
       // this.itemService.items.push(form.value);
       this.itemService.items.push(item);
-      this.itemService.saveItemsToDatabase();
+      // this.itemService.saveItemsToDatabase();
+      this.itemService.addItemtoDatabase(item);
     }
   }
 }

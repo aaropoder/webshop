@@ -1679,14 +1679,35 @@ export class ItemService {
 
   url: string =
     'https://webshioap-default-rtdb.europe-west1.firebasedatabase.app/';
+
   constructor(private http: HttpClient) {}
 
+  // saveItemsToDatabase(): void {
   saveItemsToDatabase() {
     this.http.put(this.url + 'items.json', this.items).subscribe();
   }
 
+  // getItemsFromDatabase(): Observable<Item[]> {
   getItemsFromDatabase() {
     // return this.http.get(this.url + 'items.json');
     return this.http.get<Item[]>(this.url + 'items.json');
   }
+
+  addItemtoDatabase(item: Item) {
+    console.log('TEST ' + item);
+    this.http.post(this.url, item).subscribe();
+  }
 }
+
+// item!: Item;   onAdd(item: Item){}   getItem():Item {} < määran tüübi mida funktsioon tagastab
+// new Item(price, category, title, imgSrc)
+// this.http.get<Item>() itemChanged = new Subject<Item>(); || this.http.get<Item[]>() itemsChanged = new Subject<Item[]>();
+
+// .subscribe(
+//   (reponse) => {
+//     console.log(reponse);
+//   },
+//   (error) => {
+//     console.log(error);
+//   }
+// );

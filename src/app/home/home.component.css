@@ -13,3 +13,11 @@
   height: 200px;
   width: 200px;
 }
+
+.filter-bar {
+  display: flex;
+}
+
+.filter-bar div {
+  margin-left: 10px;
+}
