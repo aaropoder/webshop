@@ -1,9 +1,11 @@
-<div class="item" *ngFor="let item of items; let i = index">
-  <div>{{ item.title }}</div>
-  <div>{{ item.price }}</div>
-  <div>{{ item.category }}</div>
-  <!-- kui kandilised sulud on routerLink ümber, siis peab ka paremal olema
-  iga komaga tekitatakse kaldkriips /  -->
-  <button [routerLink]="['/admin/edit-item', i]">Muuda eset</button>
-  <button (click)="onDeleteItem(i)">Kustuta ese</button>
+<button class="main-button back" routerLink="/admin">Tagasi</button>
+
+<div class="items-wrapper">
+  <div class="item" *ngFor="let item of items; let i = index">
+    <div class="item-title">{{ item.title }}</div>
+    <div class="item-price">{{ item.price }} €</div>
+    <!-- kui kandilised sulud on routerLink ümber, siis peab ka paremal olema iga komaga tekitatakse kaldkriips /  -->
+    <button class="main-button change" [routerLink]="['/admin/edit-item', i]">Muuda eset</button>
+    <button class="main-button delete" (click)="onDeleteItem(i)">Kustuta ese</button>
+  </div>
 </div>

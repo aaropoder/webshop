@@ -17,16 +17,12 @@ export class AddItemComponent implements OnInit {
     // console.log(form);
     // console.log(form.value);
     if (form.valid == true) {
-      const item = new Item(
-        form.value.imgSrc,
-        form.value.title,
-        form.value.price,
-        form.value.category
-      );
+      const item = new Item(form.value.imgSrc, form.value.title, form.value.price, form.value.category);
       // this.itemService.items.push(form.value);
       this.itemService.items.push(item);
       // this.itemService.saveItemsToDatabase();
       this.itemService.addItemtoDatabase(item);
+      form.reset();
     }
   }
 }

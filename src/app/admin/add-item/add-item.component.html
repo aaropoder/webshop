@@ -3,19 +3,20 @@ ngSubmit käivitub iga nupu vajutusega, kui mitu nuppu vaja hoida, siis teisteel
 onSubimit(siia vormi nimi, mis tähendab, et kogu vormi sisu antakse kaasa) #form
 ngModel seob vormiga ja vajab alti name -->
 
+<button class="main-button back" routerLink="/admin">Tagasi</button>
+
 <form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
-  <!-- <button type="button">?</button> -->
   <label>Nimetus</label><br />
-  <input ngModel name="title" type="text" required /><br />
+  <input placeholder="Toote nimetus" type="text" ngModel name="title" required /><br />
 
   <label>Pilt</label><br />
-  <input ngModel name="imgSrc" type="text" required /><br />
+  <input placeholder="Toote pilt" type="text" ngModel name="imgSrc" required /><br />
 
   <label>Hind</label><br />
-  <input ngModel name="price" type="number" required /><br />
+  <input placeholder="Toote hind" type="number" ngModel name="price" required /><br />
 
   <label>Kategooria</label><br />
-  <input ngModel name="category" type="text" required /><br />
+  <input placeholder="Toote kategooria" type="text" ngModel name="category" required /><br />
   <!-- property binding - html atribuudi muutuvaks (dünaamiliseks) tegemine - kandiliste sulgude ümber panemine. Kui kandilised sulud, siis peab olema võrdusmärk ja avaldis -->
-  <button [disabled]="addItemForm.invalid" type="submit">Sisesta toode</button>
+  <button class="main-button add" [disabled]="addItemForm.invalid" type="submit">Sisesta toode</button>
 </form>

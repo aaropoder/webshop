@@ -15,10 +15,13 @@ export class ViewItemsComponent implements OnInit {
   ngOnInit(): void {
     // this.items = this.itemService.items;
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
+      this.items = [];
+      this.itemService.items = [];
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
         console.log(element);
         this.items.push(element);
+        this.itemService.items.push(element);
       }
       // this.items = itemsFromDatabase;
       // this.itemService.items = itemsFromDatabase;
@@ -26,8 +29,11 @@ export class ViewItemsComponent implements OnInit {
   }
 
   onDeleteItem(i: number) {
-    alert('oled kustutamas');
-    this.itemService.items.splice(i, 1);
-    // this.itemService.saveItemsToDatabase();
+    let isConfirmed = confirm('Oled kustutamas!');
+    if (isConfirmed) {
+      this.itemService.items.splice(i, 1);
+      this.items.splice(i, 1);
+      this.itemService.saveItemsToDatabase();
+    }
   }
 }

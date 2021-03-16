@@ -10,11 +10,7 @@ import { ItemService } from 'src/app/services/item.service';
   styleUrls: ['./edit-item.component.css'],
 })
 export class EditItemComponent implements OnInit {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private itemService: ItemService,
-    private router: Router
-  ) {}
+  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService, private router: Router) {}
 
   // item: Item | undefined (või tühi)
   item!: Item;
@@ -22,6 +18,8 @@ export class EditItemComponent implements OnInit {
   id!: number;
 
   ngOnInit(): void {
+    //console.log(this.item);
+
     this.id = Number(this.activatedRoute.snapshot.paramMap.get('itemId'));
     this.item = this.itemService.items[this.id];
     this.editItemForm = new FormGroup({
@@ -34,15 +32,12 @@ export class EditItemComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (form.valid) {
-      const item = new Item(
-        form.value.imgSrc,
-        form.value.title,
-        form.value.price,
-        form.value.category
-      );
+      const item = new Item(form.value.imgSrc, form.value.title, form.value.price, form.value.category);
       this.itemService.items[this.id] = item;
       this.itemService.saveItemsToDatabase();
-      this.router.navigateByUrl('/admin/view-items');
+      setTimeout(() => {
+        this.router.navigateByUrl('/admin/view-items');
+      }, 1000);
     }
   }
 }

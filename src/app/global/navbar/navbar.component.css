@@ -1,14 +1,19 @@
 .navbar {
-  height: 100px;
-  background: linear-gradient(180deg, lightyellow, white);
-  border-bottom: 1px solid grey;
+  z-index: 999;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(180deg, lightyellow, white);
+  border-bottom: 1px solid grey;
+  box-shadow: 0 0 100px 0 lightgray;
 }
 
-.navbar img {
-  height: 100px;
-  width: 200px;
+.navbar .logo {
+  height: 105px;
+  margin-top: -15px;
   cursor: pointer;
 }
 

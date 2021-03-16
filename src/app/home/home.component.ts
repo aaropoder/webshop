@@ -14,25 +14,23 @@ export class HomeComponent implements OnInit {
   priceSortNumber = 0;
   titleSortNumber = 0;
 
-  constructor(
-    private cartService: CartService,
-    private itemService: ItemService
-  ) {}
+  constructor(private cartService: CartService, private itemService: ItemService) {}
 
   ngOnInit(): void {
     // this.items = this.itemService.items;
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
+      this.itemsOriginal = [];
+      this.itemService.items = [];
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
         console.log(element);
         this.itemsOriginal.push(element);
         this.itemsShown = this.itemsOriginal.slice(); // slice - ei anna mälukohta edasi, teeb koopia
+        this.itemService.items.push(element);
       }
-      // console.log('VÕTAN ESEMED');
       // this.items = itemsFromDatabase;
       // this.itemService.items = itemsFromDatabase;
     });
-    // console.log('HAKKAN VÕETUD ESEMETEST FOR TSÜKLIT TEGEMA');
   }
 
   onSortPrice() {
