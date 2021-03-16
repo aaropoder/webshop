@@ -7,6 +7,10 @@
   padding-left: 10px
 }
 
+.filter-name {
+  font-weight: bold;
+}
+
 .filter-value {
   margin-left: 10px;
   cursor: pointer;

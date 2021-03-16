@@ -2,9 +2,9 @@
 <div routerLink="admin">ADMIN</div>
 
 <div class="filter-bar">
-  <div class="filter-name">Järjesta</div>
-  <div class="filter-value price" (click)="onSortPrice()">Hinna alusel</div>
-  <div class="filter-value title" (click)="onSortTitle()">Tähestiku alusel</div>
+  <div class="filter-name">{{ "sort-text" | translate }}:</div>
+  <div class="filter-value price" (click)="onSortPrice()">{{ "Hinna alusel" | translate }}</div>
+  <div class="filter-value title" (click)="onSortTitle()">{{ "Tähestiku alusel" | translate }}</div>
 </div>
 
 <div class="items-wrapper">
@@ -13,7 +13,7 @@
     <div class="add-to-cart-button-wrapper">
       <div (click)="onAddToCart(item)" class="add-to-cart-button">Lisa ostukorvi</div>
     </div>
-    <div class="item-title">{{ item.title }}</div>
+    <div class="item-title">{{ item.title | translate }}</div>
     <div class="item-price">{{ item.price }}</div>
   </div>
 </div>

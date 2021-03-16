@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { CartService } from 'src/app/cart/cart.service';
 export class NavbarComponent implements OnInit {
   cartSum: number = 0;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private translate: TranslateService) {}
 
   // arrow function (items) => on justkui sama function(items) ehk ES6 ja ES5
 
@@ -20,5 +21,15 @@ export class NavbarComponent implements OnInit {
         this.cartSum += item.price;
       });
     });
+    let lang = localStorage.getItem('language');
+    // if (lang != null) {
+    if (lang) {
+      this.useLanguage(lang);
+    }
+  }
+
+  useLanguage(language: string): void {
+    this.translate.use(language);
+    localStorage.setItem('language', language);
   }
 }
