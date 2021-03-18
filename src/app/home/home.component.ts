@@ -1,3 +1,4 @@
+import { createDirectiveTypeParams } from '@angular/compiler/src/render3/view/compiler';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   itemsShown: Item[] = [];
   priceSortNumber = 0;
   titleSortNumber = 0;
+  kuupaev = new Date();
 
   constructor(private cartService: CartService, private itemService: ItemService) {}
 
@@ -63,5 +65,13 @@ export class HomeComponent implements OnInit {
   onAddToCart(item: Item) {
     this.cartService.cartItems.push(item);
     this.cartService.cartChanged.next(this.cartService.cartItems);
+  }
+
+  onDeleteFromCart(item: Item) {
+    let i = this.cartService.cartItems.findIndex((cartItem) => item.title == cartItem.title);
+    if (i != -1) {
+      this.cartService.cartItems.splice(i, 1);
+      this.cartService.cartChanged.next(this.cartService.cartItems);
+    }
   }
 }

@@ -16,6 +16,9 @@ import { AddItemComponent } from './admin/add-item/add-item.component';
 import { EditItemComponent } from './admin/edit-item/edit-item.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { ViewItemsComponent } from './admin/view-items/view-items.component';
+import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
+import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
+import { ViewComponent } from './item/view/view.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { ViewItemsComponent } from './admin/view-items/view-items.component';
     EditItemComponent,
     AdminHomeComponent,
     ViewItemsComponent,
+    ThousandSeparatorPipe,
+    ShortenTitlePipe,
+    ViewComponent,
   ],
   imports: [
     BrowserModule,
