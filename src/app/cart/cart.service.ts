@@ -7,8 +7,8 @@ import { Item } from '../models/item.model';
 })
 export class CartService {
   // cartItems: { imgSrc: string; title: string; price: number; category: string; }[] = [];
-  cartItems: Item[] = [];
-  cartChanged = new Subject<Item[]>();
+  cartItems: { cartItem: Item; count: number }[] = [];
+  cartChanged = new Subject<{ cartItem: Item; count: number }[]>();
 
   constructor() {}
 }

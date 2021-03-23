@@ -19,6 +19,7 @@ import { ViewItemsComponent } from './admin/view-items/view-items.component';
 import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
 import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
 import { ViewComponent } from './item/view/view.component';
+import { UniqueCategoryPipe } from './pipes/unique-category.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ViewComponent } from './item/view/view.component';
     ThousandSeparatorPipe,
     ShortenTitlePipe,
     ViewComponent,
+    UniqueCategoryPipe,
   ],
   imports: [
     BrowserModule,

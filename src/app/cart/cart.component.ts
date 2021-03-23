@@ -10,7 +10,7 @@ import { CartService } from './cart.service';
 export class CartComponent implements OnInit {
   // koolon annab tüüpi, võrdus annab väärtust
   // cartItems: { imgSrc: string; title: string; price: number; category: string; }[] = [];
-  cartItems: Item[] = [];
+  cartItems: { cartItem: Item; count: number }[] = [];
   sumOfCart: number = 0;
 
   // Dependency injection - service'i kasutusele võtmine componendis
@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
     this.calculateSumOfCart();
   }
 
-  onDeleteFromCart(i: number) {
+  onDeleteAllFromCart(i: number) {
     this.cartService.cartItems.splice(i, 1);
     this.cartService.cartChanged.next(this.cartService.cartItems);
     this.calculateSumOfCart();
@@ -39,11 +39,40 @@ export class CartComponent implements OnInit {
     this.calculateSumOfCart();
   }
 
+  onDeleteOneFromCart(item: Item) {
+    let i = this.cartService.cartItems.findIndex(
+      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
+    );
+    if (i != -1) {
+      if (this.cartService.cartItems[i].count == 1) {
+        this.cartService.cartItems.splice(i, 1);
+      } else {
+        this.cartService.cartItems[i].count -= 1;
+      }
+      this.cartService.cartChanged.next(this.cartService.cartItems);
+      this.calculateSumOfCart();
+    }
+  }
+
+  // onAddToCart(item: {imgSrc: string, title: string, price: number, category:string}) {
+  onAddToCart(item: Item) {
+    let i = this.cartService.cartItems.findIndex(
+      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
+    );
+    if (i == -1) {
+      this.cartService.cartItems.push({ cartItem: item, count: 1 });
+    } else {
+      this.cartService.cartItems[i].count += 1;
+    }
+    this.cartService.cartChanged.next(this.cartService.cartItems);
+    this.calculateSumOfCart();
+  }
+
   calculateSumOfCart() {
     this.sumOfCart = 0;
     this.cartItems.forEach((item) => {
       // this.sumOfCart = this.sumOfCart + item.price;
-      this.sumOfCart += item.price;
+      this.sumOfCart += item.cartItem.price * item.count;
     });
   }
 }

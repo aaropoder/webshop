@@ -3,15 +3,21 @@
 <div class="items-wrapper">
   <div class="item" *ngFor="let item of cartItems; let ilmar = index">
     <!-- String interpolation - kahe loogelise sulu vahel muutuja kasutajale näitamine -->
-    <img src="{{ item.imgSrc }}" />
-    <div class="item-title">{{ item.title }}</div>
-    <div class="item-price">{{ item.price }}</div>
+    <img src="{{ item.cartItem.imgSrc }}" />
+    <div class="add-to-cart-button">
+      <span (click)="onDeleteOneFromCart(item.cartItem)">-</span>
+      <span> {{ item.count }} tk </span>
+      <span (click)="onAddToCart(item.cartItem)">+</span>
+    </div>
+    <div>{{ item.count * item.cartItem.price | thousandSeparator }} €</div>
+    <div class="item-title">{{ item.cartItem.title }}</div>
+    <div class="item-price">{{ item.cartItem.price | thousandSeparator }}</div>
     <!-- Event binding - ümar sulgude vahel sündmuse kasutusele võtmine -->
-    <img (click)="onDeleteFromCart(ilmar)" class="delete-from-cart-button" src="assets/bin.svg" alt="" />
+    <img (click)="onDeleteAllFromCart(ilmar)" class="delete-from-cart-button" src="assets/bin.svg" alt="" />
   </div>
 </div>
 
-<div class="sum-of-cart" *ngIf="cartItems.length > 0">SUMMA: {{ sumOfCart.toFixed(2) }} €</div>
+<div class="sum-of-cart" *ngIf="cartItems.length > 0">SUMMA: {{ sumOfCart | thousandSeparator }} €</div>
 
 <div class="empty-cart" *ngIf="cartItems.length == 0">
   <img src="//unsplash.it/100/100" alt="" />

@@ -1,4 +1,3 @@
-import { createDirectiveTypeParams } from '@angular/compiler/src/render3/view/compiler';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
@@ -32,7 +31,18 @@ export class HomeComponent implements OnInit {
       }
       // this.items = itemsFromDatabase;
       // this.itemService.items = itemsFromDatabase;
+
+      // let cartItems = this.cartService.cartItems;
+      // this.itemsShown = this.itemsOriginal.map((item) => {
+      //   cartItems.forEach((cartItem) => {
+      //     return { ...item, count: cartItem.count };
+      //   });
+      // });
     });
+  }
+
+  onCategoryFilter(category: string) {
+    this.itemsShown = this.itemsOriginal.filter((item) => item.category == category);
   }
 
   onSortPrice() {
@@ -61,17 +71,30 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // onAddToCart(item: {imgSrc: string, title: string, price: number, category:string}) {
-  onAddToCart(item: Item) {
-    this.cartService.cartItems.push(item);
-    this.cartService.cartChanged.next(this.cartService.cartItems);
-  }
-
   onDeleteFromCart(item: Item) {
-    let i = this.cartService.cartItems.findIndex((cartItem) => item.title == cartItem.title);
+    let i = this.cartService.cartItems.findIndex(
+      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
+    );
     if (i != -1) {
-      this.cartService.cartItems.splice(i, 1);
+      if (this.cartService.cartItems[i].count == 1) {
+        this.cartService.cartItems.splice(i, 1);
+      } else {
+        this.cartService.cartItems[i].count -= 1;
+      }
       this.cartService.cartChanged.next(this.cartService.cartItems);
     }
+  }
+
+  // onAddToCart(item: {imgSrc: string, title: string, price: number, category:string}) {
+  onAddToCart(item: Item) {
+    let i = this.cartService.cartItems.findIndex(
+      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
+    );
+    if (i == -1) {
+      this.cartService.cartItems.push({ cartItem: item, count: 1 });
+    } else {
+      this.cartService.cartItems[i].count += 1;
+    }
+    this.cartService.cartChanged.next(this.cartService.cartItems);
   }
 }

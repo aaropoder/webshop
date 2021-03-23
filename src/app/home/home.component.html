@@ -1,8 +1,12 @@
 <!-- {{ items | json  }} -->
 <div routerLink="admin">ADMIN</div>
 
-{{ kuupaev | date: "fullDate" | uppercase }}
-{{ 500000 | currency: "EUR" }}
+<!-- {{ kuupaev | date: "fullDate" | uppercase }}
+{{ 500000 | currency: "EUR" }} -->
+
+<div (click)="onCategoryFilter(category)" *ngFor="let category of itemsOriginal | uniqueCategory">
+  {{ category }}
+</div>
 
 <div class="filter-bar">
   <div class="filter-name">{{ "sort-text" | translate }}:</div>
