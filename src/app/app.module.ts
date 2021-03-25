@@ -20,6 +20,8 @@ import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
 import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
 import { ViewComponent } from './item/view/view.component';
 import { UniqueCategoryPipe } from './pipes/unique-category.pipe';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { UniqueCategoryPipe } from './pipes/unique-category.pipe';
     ShortenTitlePipe,
     ViewComponent,
     UniqueCategoryPipe,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
