@@ -13,21 +13,17 @@ export class ItemService {
   constructor(private http: HttpClient) {}
 
   // PUT - asendatakse kõik asjad ära andmebaasis selle väärtusega, mis kaasa anname
-  // saveItemsToDatabase(): void {
   saveItemsToDatabase() {
     this.http.put(this.url + 'items.json', this.items).subscribe();
   }
 
   // GET - võtab andmebaasist
-  // getItemsFromDatabase(): Observable<Item[]> {
   getItemsFromDatabase() {
-    // return this.http.get(this.url + 'items.json');
     return this.http.get<Item[]>(this.url + 'items.json');
   }
 
   // POST - lisatakse väärtus juurde, mis kaasa anname
   addItemtoDatabase(item: Item) {
-    console.log('TEST ' + item);
     this.http.post(this.url + 'items.json', item).subscribe();
   }
 }

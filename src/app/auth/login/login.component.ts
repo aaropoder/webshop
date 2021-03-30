@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponseData, AuthService } from '../auth.service';
+import { AutologinService } from '../autologin.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   error: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private autologinService: AutologinService) {}
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -29,6 +30,8 @@ export class LoginComponent implements OnInit {
     authObs.subscribe(
       (resData) => {
         this.isLoading = false;
+        console.log('NEXT PANEB SUBSCRIBE UUESTI KÄIMA');
+        this.autologinService.isLoggedIn.next(true);
         this.router.navigateByUrl('/admin');
       },
       (errorMessage) => {

@@ -1,4 +1,3 @@
-// export on selleks, et saaks seda hiljem importida
 export class Item {
   constructor(
     // private imgSrc: string,

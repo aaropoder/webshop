@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
@@ -13,18 +14,21 @@ export class HomeComponent implements OnInit {
   itemsShown: Item[] = [];
   priceSortNumber = 0;
   titleSortNumber = 0;
-  kuupaev = new Date();
+  cookieValue = '';
+  cartItems = [];
 
-  constructor(private cartService: CartService, private itemService: ItemService) {}
+  constructor(
+    private cartService: CartService,
+    private itemService: ItemService,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit(): void {
-    // this.items = this.itemService.items;
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.itemsOriginal = [];
       this.itemService.items = [];
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
-        console.log(element);
         this.itemsOriginal.push(element);
         this.itemsShown = this.itemsOriginal.slice(); // slice - ei anna mälukohta edasi, teeb koopia
         this.itemService.items.push(element);
@@ -82,10 +86,10 @@ export class HomeComponent implements OnInit {
         this.cartService.cartItems[i].count -= 1;
       }
       this.cartService.cartChanged.next(this.cartService.cartItems);
+      this.cookieService.set('Ostukorv', JSON.stringify(this.cartService.cartItems));
     }
   }
 
-  // onAddToCart(item: {imgSrc: string, title: string, price: number, category:string}) {
   onAddToCart(item: Item) {
     let i = this.cartService.cartItems.findIndex(
       (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
@@ -96,5 +100,6 @@ export class HomeComponent implements OnInit {
       this.cartService.cartItems[i].count += 1;
     }
     this.cartService.cartChanged.next(this.cartService.cartItems);
+    this.cookieService.set('Ostukorv', JSON.stringify(this.cartService.cartItems));
   }
 }
