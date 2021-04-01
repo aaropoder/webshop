@@ -17,6 +17,16 @@ ngModel seob vormiga ja vajab alti name -->
 
   <label>Kategooria</label><br />
   <input placeholder="Toote kategooria" type="text" ngModel name="category" required /><br />
+
+  <label>Ribakood</label><br />
+  <input placeholder="Toote ribakood" type="number" ngModel name="barcode" /><br />
+
+  <label>Tootja</label><br />
+  <input placeholder="Toote tootja" type="text" ngModel name="producer" /><br />
+
+  <label>Kirjeldus</label><br />
+  <input placeholder="Toote kirjeldus" type="text" ngModel name="description" /><br />
+
   <!-- property binding - html atribuudi muutuvaks (dünaamiliseks) tegemine - kandiliste sulgude ümber panemine. Kui kandilised sulud, siis peab olema võrdusmärk ja avaldis -->
   <button class="main-button add" [disabled]="addItemForm.invalid" type="submit">Sisesta toode</button>
 </form>

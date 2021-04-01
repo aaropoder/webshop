@@ -13,5 +13,14 @@
   <label>Kategooria</label><br />
   <input placeholder="Toote kategooria" type="text" formControlName="category" required /><br />
 
+  <label>Ribakood</label><br />
+  <input placeholder="Toote ribakood" type="number" formControlName="barcode" /><br />
+
+  <label>Tootja</label><br />
+  <input placeholder="Toote tootja" type="text" formControlName="producer" /><br />
+
+  <label>Kirjeldus</label><br />
+  <input placeholder="Toote kirjeldus" type="text" formControlName="description" /><br />
+
   <button class="main-button add" [disabled]="editItemForm.invalid" type="submit">Muuda toode</button>
 </form>

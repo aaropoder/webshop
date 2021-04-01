@@ -15,7 +15,15 @@ export class AddItemComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.valid == true) {
-      const item = new Item(form.value.imgSrc, form.value.title, form.value.price, form.value.category);
+      const item = new Item(
+        form.value.imgSrc,
+        form.value.title,
+        form.value.price,
+        form.value.category,
+        form.value.barcode,
+        form.value.producer,
+        form.value.description
+      );
       // this.itemService.items.push(form.value);
       this.itemService.items.push(item);
       // this.itemService.saveItemsToDatabase();
