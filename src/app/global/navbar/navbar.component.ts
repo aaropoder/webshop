@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     let cookieValue = this.cookieService.get('Ostukorv');
-    this.cartService.cartItems = JSON.parse(cookieValue) || [];
+    this.cartService.cartItems = cookieValue == '' ? [] : JSON.parse(cookieValue);
 
     this.user = this.autologinService.autologin();
     console.log('NAVBAR NGONIT');
