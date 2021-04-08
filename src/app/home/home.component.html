@@ -3,6 +3,9 @@
 <!-- {{ kuupaev | date: "fullDate" | uppercase }}
 {{ 500000 | currency: "EUR" }} -->
 
+<app-gallery-carousel></app-gallery-carousel>
+<br /><br />
+
 <div (click)="onCategoryFilter(category)" *ngFor="let category of itemsOriginal | uniqueCategory">
   {{ category }}
 </div>
@@ -18,7 +21,13 @@
 </div>
 
 <div class="items-wrapper">
-  <div class="item" *ngFor="let itemShown of itemsShown; let i = index">
-    <app-item-card [item]="itemShown" [i]="i"></app-item-card>
-  </div>
+  <app-item-card
+    class="item"
+    *ngFor="let itemShown of itemsShown | showActiveItems: isLoggedIn; let i = index"
+    [item]="itemShown"
+    [i]="i"
+    [loggedIn]="isLoggedIn"
+    (itemActiveChanged)="itemActiveChanged($event)"
+  >
+  </app-item-card>
 </div>

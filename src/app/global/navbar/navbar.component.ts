@@ -34,7 +34,6 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = loggedIn;
       console.log('SUBSCRIBE LÄHEB KÄIMA');
     });
-
     this.isLoggedIn = this.user ? true : false;
 
     this.calculateSumOfCart(this.cartService.cartItems);

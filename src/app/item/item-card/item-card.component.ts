@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+// import * as EventEmitter from 'events';
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/cart/cart.service';
 import { Item } from 'src/app/models/item.model';
@@ -11,10 +12,17 @@ import { Item } from 'src/app/models/item.model';
 export class ItemCardComponent implements OnInit {
   @Input() item!: Item;
   @Input() i!: Number;
+  @Input('loggedIn') isLoggedIn!: boolean;
+  @Output() itemActiveChanged = new EventEmitter();
 
   constructor(private cartService: CartService, private cookieService: CookieService) {}
 
   ngOnInit(): void {}
+
+  onItemActive() {
+    this.item.isActive = !this.item.isActive;
+    this.itemActiveChanged.emit(this.item);
+  }
 
   onDeleteFromCart(item: Item) {
     let i = this.cartService.cartItems.findIndex(

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutologinService } from '../auth/autologin.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
 
@@ -14,10 +15,19 @@ export class HomeComponent implements OnInit {
   titleSortNumber = 0;
   cookieValue = '';
   cartItems = [];
+  isLoggedIn = false;
 
-  constructor(private itemService: ItemService) {}
+  constructor(private itemService: ItemService, private autologinService: AutologinService) {}
 
   ngOnInit(): void {
+    let user = this.autologinService.autologin();
+    console.log('NAVBAR NGONIT');
+    this.autologinService.isLoggedIn.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      console.log('SUBSCRIBE LÄHEB KÄIMA');
+    });
+    this.isLoggedIn = user ? true : false;
+
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.itemsOriginal = [];
       this.itemService.items = [];
@@ -62,5 +72,12 @@ export class HomeComponent implements OnInit {
       this.itemsShown = this.itemsOriginal.slice();
       this.titleSortNumber = 0;
     }
+  }
+
+  itemActiveChanged(item: Item) {
+    let i = this.itemsOriginal.indexOf(item);
+    // this.itemsOriginal[i] = item;
+    this.itemService.items[i] = item;
+    this.itemService.saveItemsToDatabase();
   }
 }

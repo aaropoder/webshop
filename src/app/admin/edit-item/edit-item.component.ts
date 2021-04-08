@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +11,12 @@ import { ItemService } from 'src/app/services/item.service';
   styleUrls: ['./edit-item.component.css'],
 })
 export class EditItemComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private itemService: ItemService,
+    private router: Router,
+    private location: Location
+  ) {}
 
   // item: Item | undefined (või tühi)
   item!: Item;
@@ -29,8 +35,14 @@ export class EditItemComponent implements OnInit {
       category: new FormControl(this.item.category),
       barcode: new FormControl(this.item.barcode),
       producer: new FormControl(this.item.producer),
-      description: new FormControl(this.item.description),
+      description: new FormControl(this.item.description), // vasakpoolne sama, mis HTMLis vormis fomrControlName=""
+      isActive: new FormControl(this.item.isActive), //(this.item.---), sama mis modelis
     });
+  }
+
+  onBack() {
+    // this.router.navigateByUrl('/admin/view-items');
+    this.location.back();
   }
 
   onSubmit(form: FormGroup) {
@@ -42,7 +54,8 @@ export class EditItemComponent implements OnInit {
         form.value.category,
         form.value.barcode,
         form.value.producer,
-        form.value.description
+        form.value.description,
+        form.value.isActive
       );
       this.itemService.items[this.id] = item;
       this.itemService.saveItemsToDatabase();
