@@ -6,7 +6,7 @@
 <app-gallery-carousel></app-gallery-carousel>
 <br /><br />
 
-<div (click)="onCategoryFilter(category)" *ngFor="let category of itemsOriginal | uniqueCategory">
+<div class="sidebar" (click)="onCategoryFilter(category)" *ngFor="let category of itemsOriginal | uniqueCategory">
   {{ category }}
 </div>
 

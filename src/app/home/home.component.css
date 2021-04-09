@@ -28,3 +28,8 @@
   border: 1px solid gray;
   padding-bottom: 20px;
 }
+
+.sidebar {
+  cursor: pointer;
+  background-color: khaki;
+}
