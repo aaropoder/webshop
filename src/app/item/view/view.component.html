@@ -1,7 +1,11 @@
 {{ item | json }}
 
-<div class="add-to-cart-button">
-  <span (click)="onDeleteFromCart(item)">-</span>
-  <span> kogus </span>
-  <span (click)="onAddToCart(item)">+</span>
+<div class="panel" *ngIf="item">
+  <div class="add-to-cart-button">
+    <span (click)="onDeleteFromCart(item)">-</span>
+    <span> kogus </span>
+    <span (click)="onAddToCart(item)">+</span>
+  </div>
 </div>
+
+<div *ngIf="!item">Toodet ei leitud</div>

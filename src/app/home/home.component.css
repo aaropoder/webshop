@@ -29,7 +29,11 @@
   padding-bottom: 20px;
 }
 
-.sidebar {
+.sidenav {
   cursor: pointer;
   background-color: khaki;
+}
+
+.category-active {
+  font-weight: bold;
 }

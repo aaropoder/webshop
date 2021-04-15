@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { AutologinService } from '../auth/autologin.service';
+import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
+import { ShowActiveItemsPipe } from './show-active-items.pipe';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +19,25 @@ export class HomeComponent implements OnInit {
   cookieValue = '';
   cartItems = [];
   isLoggedIn = false;
+  categoryShown = 'all';
 
-  constructor(private itemService: ItemService, private autologinService: AutologinService) {}
+  constructor(
+    private itemService: ItemService,
+    private autologinService: AutologinService,
+    private showActiveItemsPipe: ShowActiveItemsPipe,
+    private cookieService: CookieService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
+    let cookieValue = this.cookieService.get('Ostukorv');
+    this.cartItems = cookieValue == '' ? [] : JSON.parse(cookieValue);
+
     let user = this.autologinService.autologin();
     console.log('NAVBAR NGONIT');
     this.autologinService.isLoggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+      this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
       console.log('SUBSCRIBE LÄHEB KÄIMA');
     });
     this.isLoggedIn = user ? true : false;
@@ -35,43 +49,56 @@ export class HomeComponent implements OnInit {
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
         this.itemsOriginal.push(element);
-        this.itemsShown = this.itemsOriginal.slice(); // slice - ei anna mälukohta edasi, teeb koopia
+        this.itemsShown = this.itemsOriginal.slice();
         this.itemService.items.push(element);
       }
 
-      // this.items = itemsFromDatabase;
-      // this.itemService.items = itemsFromDatabase;
+      this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
     });
   }
 
   onCategoryFilter(category: string) {
-    this.itemsShown = this.itemsOriginal.filter((item) => item.category == category);
-  }
-
-  onSortPrice() {
-    if (this.priceSortNumber == 0) {
-      this.itemsShown.sort((a, b) => a.price - b.price);
-      this.priceSortNumber = 1;
-    } else if (this.priceSortNumber == 1) {
-      this.itemsShown.sort((a, b) => b.price - a.price);
-      this.priceSortNumber = 2;
+    this.categoryShown = category;
+    if (category != 'all') {
+      this.itemsShown = this.itemsOriginal.filter((item) => item.category == category);
     } else {
       this.itemsShown = this.itemsOriginal.slice();
-      this.priceSortNumber = 0;
     }
+    this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
   }
 
   onSortTitle() {
-    if (this.titleSortNumber == 0) {
-      this.itemsShown.sort((a, b) => a.title.localeCompare(b.title));
-      this.titleSortNumber = 1;
-    } else if (this.titleSortNumber == 1) {
-      this.itemsShown.sort((a, b) => b.title.localeCompare(a.title));
-      this.titleSortNumber = 2;
+    this.onSort(this.titleSortNumber, 'string');
+  }
+
+  onSortPrice() {
+    this.onSort(this.priceSortNumber, 'number');
+  }
+
+  onSort(sortNumber: number, sortType: string) {
+    if (sortNumber == 0) {
+      if (sortType == 'string') {
+        this.itemsShown.sort((a, b) => a.title.localeCompare(b.title));
+        this.titleSortNumber = 1;
+      } else if (sortType == 'number') {
+        this.itemsShown.sort((a, b) => a.price - b.price);
+        this.priceSortNumber = 1;
+      }
+    } else if (sortNumber == 1) {
+      if (sortType == 'string') {
+        this.itemsShown.sort((a, b) => b.title.localeCompare(a.title));
+        this.titleSortNumber = 2;
+      } else if (sortType == 'number') {
+        this.itemsShown.sort((a, b) => b.price - a.price);
+        this.priceSortNumber = 2;
+      }
     } else {
       this.itemsShown = this.itemsOriginal.slice();
+      this.onCategoryFilter(this.categoryShown);
+      this.priceSortNumber = 0;
       this.titleSortNumber = 0;
     }
+    this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
   }
 
   itemActiveChanged(item: Item) {

@@ -37,11 +37,9 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = this.user ? true : false;
 
     this.calculateSumOfCart(this.cartService.cartItems);
-
     this.cartService.cartChanged.subscribe((items) => {
       this.calculateSumOfCart(items);
     });
-
     let lang = localStorage.getItem('language');
     if (lang) {
       this.useLanguage(lang);

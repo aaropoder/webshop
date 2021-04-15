@@ -6,8 +6,17 @@
 <app-gallery-carousel></app-gallery-carousel>
 <br /><br />
 
-<div class="sidebar" (click)="onCategoryFilter(category)" *ngFor="let category of itemsOriginal | uniqueCategory">
-  {{ category }}
+<div class="sidenav">
+  <div (click)="onCategoryFilter('all')" [ngClass]="{ 'category-active': categoryShown == 'all' }">
+    Kõik kategooriad
+  </div>
+  <div
+    (click)="onCategoryFilter(category)"
+    *ngFor="let category of itemsOriginal | showActiveItems: isLoggedIn | uniqueCategory"
+    [ngClass]="{ 'category-active': category == categoryShown }"
+  >
+    {{ category }}
+  </div>
 </div>
 
 <div class="filter-bar">
@@ -23,7 +32,7 @@
 <div class="items-wrapper">
   <app-item-card
     class="item"
-    *ngFor="let itemShown of itemsShown | showActiveItems: isLoggedIn; let i = index"
+    *ngFor="let itemShown of itemsShown; let i = index"
     [item]="itemShown"
     [i]="i"
     [loggedIn]="isLoggedIn"

@@ -22,7 +22,10 @@ export class ViewComponent implements OnInit {
 
   ngOnInit(): void {
     let id = Number(this.route.snapshot.paramMap.get('itemId'));
-    this.item = this.itemSevice.items[id];
+    let item = this.itemSevice.items.find((item) => item.barcode == id);
+    if (item) {
+      this.item = item;
+    }
   }
 
   onDeleteFromCart(item: Item) {

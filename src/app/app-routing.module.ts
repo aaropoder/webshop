@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddItemComponent } from './admin/add-item/add-item.component';
+import { AddItemComponent } from './admin/item/add-item/add-item.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { CarouselSettingsComponent } from './admin/carousel-settings/carousel-settings.component';
-import { EditItemComponent } from './admin/edit-item/edit-item.component';
-import { ViewItemsComponent } from './admin/view-items/view-items.component';
+import { EditItemComponent } from './admin/item/edit-item/edit-item.component';
+import { ViewItemsComponent } from './admin/item/view-items/view-items.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';

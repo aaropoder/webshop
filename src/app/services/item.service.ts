@@ -12,31 +12,23 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  // PUT - asendatakse kõik asjad ära andmebaasis selle väärtusega, mis kaasa anname
-  saveItemsToDatabase() {
+  saveItemsToDatabase(): void {
+    // this.items = this.items.map((item) => ({
+    //   ...item,
+    //   barcode: this.getRandomNumber(),
+    // }));
     this.http.put(this.url + 'items.json', this.items).subscribe();
   }
 
-  // GET - võtab andmebaasist
+  getRandomNumber() {
+    return Math.floor(Math.random() * 99999999 - 10000000 + 10000000);
+  }
+
   getItemsFromDatabase() {
     return this.http.get<Item[]>(this.url + 'items.json');
   }
 
-  // POST - lisatakse väärtus juurde, mis kaasa anname
   addItemtoDatabase(item: Item) {
     this.http.post(this.url + 'items.json', item).subscribe();
   }
 }
-
-// item!: Item;   onAdd(item: Item){}   getItem():Item {} < määran tüübi mida funktsioon tagastab
-// new Item(price, category, title, imgSrc)
-// this.http.get<Item>() itemChanged = new Subject<Item>(); || this.http.get<Item[]>() itemsChanged = new Subject<Item[]>();
-
-// .subscribe(
-//   (reponse) => {
-//     console.log(reponse);
-//   },
-//   (error) => {
-//     console.log(error);
-//   }
-// );
