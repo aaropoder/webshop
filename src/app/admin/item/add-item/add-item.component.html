@@ -19,7 +19,20 @@ ngModel seob vormiga ja vajab alti name -->
   <input placeholder="Toote kategooria" type="text" ngModel name="category" required /><br />
 
   <label>Ribakood</label><br />
-  <input placeholder="Toote ribakood" type="number" ngModel name="barcode" /><br />
+  <input
+    (keyup)="onCheckBarcodeUnique()"
+    [(ngModel)]="barcode"
+    placeholder="Toote ribakood"
+    ngModel
+    name="barcode"
+    minlength="8"
+    maxlength="8"
+    pattern="^[0-9]*$"
+    type="text"
+    required
+  /><br />
+
+  <div *ngIf="!barcodeUnique" class="alert alert-danger" role="alert">Jama majas, see ribakood juba olemas</div>
 
   <label>Tootja</label><br />
   <input placeholder="Toote tootja" type="text" ngModel name="producer" /><br />

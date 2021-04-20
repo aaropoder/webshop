@@ -29,12 +29,13 @@ export class ViewItemsComponent implements OnInit {
     });
   }
 
-  onDeleteItem(i: number) {
+  onDeleteItem(barcode: number) {
     let isConfirmed = confirm(this.translate.instant('Oled kustutamas!'));
     if (isConfirmed) {
+      let i = this.itemService.items.findIndex((item) => item.barcode == barcode);
       this.itemService.items.splice(i, 1);
       this.items.splice(i, 1);
-      this.itemService.saveItemsToDatabase();
+      this.itemService.saveItemsToDatabase().subscribe();
     }
   }
 }

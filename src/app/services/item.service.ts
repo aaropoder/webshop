@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Item } from '../models/item.model';
 
 @Injectable({
@@ -12,12 +13,12 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  saveItemsToDatabase(): void {
+  saveItemsToDatabase(): Observable<Object> {
     // this.items = this.items.map((item) => ({
     //   ...item,
     //   barcode: this.getRandomNumber(),
     // }));
-    this.http.put(this.url + 'items.json', this.items).subscribe();
+    return this.http.put(this.url + 'items.json', this.items);
   }
 
   getRandomNumber() {
@@ -29,6 +30,6 @@ export class ItemService {
   }
 
   addItemtoDatabase(item: Item) {
-    this.http.post(this.url + 'items.json', item).subscribe();
+    return this.http.post(this.url + 'items.json', item);
   }
 }

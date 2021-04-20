@@ -105,6 +105,6 @@ export class HomeComponent implements OnInit {
     let i = this.itemsOriginal.indexOf(item);
     // this.itemsOriginal[i] = item;
     this.itemService.items[i] = item;
-    this.itemService.saveItemsToDatabase();
+    this.itemService.saveItemsToDatabase().subscribe();
   }
 }

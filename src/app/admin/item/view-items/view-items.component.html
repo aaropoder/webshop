@@ -1,15 +1,11 @@
 <button class="main-button back" routerLink="/admin">Tagasi</button>
 
 <div class="items-wrapper">
-  <div class="item" *ngFor="let item of items; let i = index">
+  <div class="item" *ngFor="let item of items">
     <div class="item-title">{{ item.title }}</div>
     <div class="item-price">{{ item.price | thousandSeparator }} €</div>
     <!-- kui kandilised sulud on routerLink ümber, siis peab ka paremal olema iga komaga tekitatakse kaldkriips /  -->
-    <button class="main-button change" [routerLink]="['/admin/edit-item', i]">
-      Muuda eset
-    </button>
-    <button class="main-button delete" (click)="onDeleteItem(i)">
-      Kustuta ese
-    </button>
+    <button class="main-button change" [routerLink]="['/admin/edit-item', item.barcode]">Muuda eset</button>
+    <button class="main-button delete" (click)="onDeleteItem(item.barcode)">Kustuta ese</button>
   </div>
 </div>
