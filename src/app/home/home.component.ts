@@ -48,27 +48,15 @@ export class HomeComponent implements OnInit {
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.itemsOriginal = [];
       this.itemService.items = [];
-
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
         this.itemsOriginal.push(element);
         this.itemsShown = this.itemsOriginal.slice();
         this.itemService.items.push(element);
       }
-
+      this.addCountToItems();
       this.itemsShown = this.showActiveItemsPipe.transform(this.itemsOriginal.slice(), this.isLoggedIn);
     });
-  }
-
-  onCategoryFilter(category: string) {
-    this.categoryShown = category;
-    if (category != 'all') {
-      this.itemsShown = this.itemsOriginal.filter((item) => item.category == category);
-    } else {
-      this.itemsShown = this.itemsOriginal.slice();
-    }
-    this.addCountToItems;
-    this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
   }
 
   addCountToItems() {
@@ -80,6 +68,16 @@ export class HomeComponent implements OnInit {
         count,
       };
     });
+  }
+
+  onCategoryFilter(category: string) {
+    this.categoryShown = category;
+    if (category != 'all') {
+      this.itemsShown = this.itemsOriginal.filter((item) => item.category == category);
+    } else {
+      this.itemsShown = this.itemsOriginal.slice();
+    }
+    this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
   }
 
   onSortTitle() {

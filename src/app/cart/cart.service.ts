@@ -17,7 +17,6 @@ export class CartService {
       (cartItem) => item.barcode == cartItem.cartItem.barcode && item.price == cartItem.cartItem.price
     );
     if (i != -1) {
-      // this.item.count--;
       if (this.cartItems[i].count == 1) {
         this.cartItems.splice(i, 1);
       } else {
@@ -34,7 +33,6 @@ export class CartService {
     let i = this.cartItems.findIndex(
       (cartItem) => item.barcode == cartItem.cartItem.barcode && item.price == cartItem.cartItem.price
     );
-    // this.item.count++;
     if (i == -1) {
       this.cartItems.push({ cartItem: item, count: 1 });
     } else {
