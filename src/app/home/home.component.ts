@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AutologinService } from '../auth/autologin.service';
-import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
 import { ShowActiveItemsPipe } from './show-active-items.pipe';
@@ -25,23 +24,27 @@ export class HomeComponent implements OnInit {
     private itemService: ItemService,
     private autologinService: AutologinService,
     private showActiveItemsPipe: ShowActiveItemsPipe,
-    private cookieService: CookieService,
-    private cartService: CartService
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {
     let cookieValue = this.cookieService.get('Ostukorv');
     this.cartItems = cookieValue == '' ? [] : JSON.parse(cookieValue);
+    this.checkIfUserLoggedIn();
+    this.getItemsFromDatabase();
+  }
 
+  checkIfUserLoggedIn() {
     let user = this.autologinService.autologin();
-    console.log('NAVBAR NGONIT');
     this.autologinService.isLoggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
       console.log('SUBSCRIBE LÄHEB KÄIMA');
     });
     this.isLoggedIn = user ? true : false;
+  }
 
+  getItemsFromDatabase() {
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.itemsOriginal = [];
       this.itemService.items = [];
@@ -53,7 +56,7 @@ export class HomeComponent implements OnInit {
         this.itemService.items.push(element);
       }
 
-      this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
+      this.itemsShown = this.showActiveItemsPipe.transform(this.itemsOriginal.slice(), this.isLoggedIn);
     });
   }
 
@@ -64,7 +67,19 @@ export class HomeComponent implements OnInit {
     } else {
       this.itemsShown = this.itemsOriginal.slice();
     }
+    this.addCountToItems;
     this.itemsShown = this.showActiveItemsPipe.transform(this.itemsShown, this.isLoggedIn);
+  }
+
+  addCountToItems() {
+    this.itemsOriginal = this.itemsOriginal.map((itemOriginal) => {
+      const index = this.cartItems.findIndex((cartItems) => cartItems['cartItem']['barcode'] == itemOriginal.barcode);
+      const { count } = index !== -1 ? this.cartItems[index] : { count: 0 };
+      return {
+        ...itemOriginal,
+        count,
+      };
+    });
   }
 
   onSortTitle() {

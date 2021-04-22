@@ -8,12 +8,14 @@
   <span [routerLink]="['/admin/edit-item', item.barcode]">Muuda</span>
 </span>
 
+{{ item.count | json }}
+
 <span [ngClass]="{ 'item-grayed': !item.isActive }">
   <img routerLink="view/{{ item.barcode }}" src="{{ item.imgSrc }}" />
   <div class="add-to-cart-button-wrapper">
     <div class="add-to-cart-button" *ngIf="item.isActive">
       <span (click)="onDeleteFromCart(item)">-</span>
-      <span> kogus </span>
+      <span> {{ item.count }} tk</span>
       <span (click)="onAddToCart(item)">+</span>
     </div>
   </div>

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 // import * as EventEmitter from 'events';
-import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/cart/cart.service';
 import { Item } from 'src/app/models/item.model';
 
@@ -14,7 +13,7 @@ export class ItemCardComponent implements OnInit {
   @Input('loggedIn') isLoggedIn!: boolean;
   @Output() itemActiveChanged = new EventEmitter();
 
-  constructor(private cartService: CartService, private cookieService: CookieService) {}
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {}
 
@@ -24,30 +23,14 @@ export class ItemCardComponent implements OnInit {
   }
 
   onDeleteFromCart(item: Item) {
-    let i = this.cartService.cartItems.findIndex(
-      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
-    );
-    if (i != -1) {
-      if (this.cartService.cartItems[i].count == 1) {
-        this.cartService.cartItems.splice(i, 1);
-      } else {
-        this.cartService.cartItems[i].count -= 1;
-      }
-      this.cartService.cartChanged.next(this.cartService.cartItems);
-      this.cookieService.set('Ostukorv', JSON.stringify(this.cartService.cartItems));
+    let isDeleted = this.cartService.deleteFromCart(item);
+    if (isDeleted) {
+      this.item.count--;
     }
   }
 
   onAddToCart(item: Item) {
-    let i = this.cartService.cartItems.findIndex(
-      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
-    );
-    if (i == -1) {
-      this.cartService.cartItems.push({ cartItem: item, count: 1 });
-    } else {
-      this.cartService.cartItems[i].count += 1;
-    }
-    this.cartService.cartChanged.next(this.cartService.cartItems);
-    this.cookieService.set('Ostukorv', JSON.stringify(this.cartService.cartItems));
+    this.cartService.addToCart(item);
+    this.item.count++;
   }
 }

@@ -1,6 +1,6 @@
 <button class="main-button back" (click)="onBack()">Tagasi</button>
 
-<form (ngSubmit)="onSubmit(editItemForm)" [formGroup]="editItemForm">
+<form *ngIf="editItemForm" (ngSubmit)="onSubmit(editItemForm)" [formGroup]="editItemForm">
   <label>Nimetus</label><br />
   <input placeholder="Toote nimetus" type="text" formControlName="title" required /><br />
 
@@ -37,5 +37,5 @@
   <label>Aktiivne</label><br />
   <input type="checkbox" formControlName="isActive" /><br />
 
-  <button class="main-button add" [disabled]="editItemForm.invalid" type="submit">Muuda</button>
+  <button class="main-button add" [disabled]="editItemForm.invalid || !barcodeUnique" type="submit">Muuda</button>
 </form>

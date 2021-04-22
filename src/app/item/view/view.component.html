@@ -3,7 +3,7 @@
 <div class="panel" *ngIf="item">
   <div class="add-to-cart-button">
     <span (click)="onDeleteFromCart(item)">-</span>
-    <span> kogus </span>
+    <span> {{ item.count }} tk</span>
     <span (click)="onAddToCart(item)">+</span>
   </div>
 </div>

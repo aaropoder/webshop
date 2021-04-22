@@ -22,7 +22,6 @@ export class AddItemComponent implements OnInit {
       this.itemService.items = [];
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
-        console.log(element);
         this.items.push(element);
         this.itemService.items.push(element);
       }
@@ -44,7 +43,8 @@ export class AddItemComponent implements OnInit {
         form.value.barcode,
         form.value.producer,
         form.value.description,
-        true
+        true,
+        0
       );
       // this.itemService.items.push(form.value);
       this.itemService.items.push(item);

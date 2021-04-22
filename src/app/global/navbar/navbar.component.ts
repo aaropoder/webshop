@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit {
     this.cartService.cartItems = cookieValue == '' ? [] : JSON.parse(cookieValue);
 
     this.user = this.autologinService.autologin();
-    console.log('NAVBAR NGONIT');
     this.autologinService.isLoggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       console.log('SUBSCRIBE LÄHEB KÄIMA');

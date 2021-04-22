@@ -14,13 +14,11 @@ export class ViewItemsComponent implements OnInit {
   constructor(private itemService: ItemService, private translate: TranslateService) {}
 
   ngOnInit(): void {
-    // this.items = this.itemService.items;
     this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.items = [];
       this.itemService.items = [];
       for (const key in itemsFromDatabase) {
         const element = itemsFromDatabase[key];
-        console.log(element);
         this.items.push(element);
         this.itemService.items.push(element);
       }

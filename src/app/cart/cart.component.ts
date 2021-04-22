@@ -17,48 +17,27 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private cookieService: CookieService) {}
 
   ngOnInit(): void {
-    console.log('olen cart componendis');
     this.cartItems = this.cartService.cartItems;
     this.calculateSumOfCart();
   }
 
   onDeleteAllFromCart(i: number) {
     this.cartService.cartItems.splice(i, 1);
-    // this.cartService.cartChanged.next(this.cartService.cartItems);
     this.calculateSumOfCart();
   }
 
   onEmptyCart() {
     this.cartService.cartItems.splice(0);
-    // this.cartService.cartChanged.next(this.cartService.cartItems);
     this.calculateSumOfCart();
   }
 
   onDeleteOneFromCart(item: Item) {
-    let i = this.cartService.cartItems.findIndex(
-      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
-    );
-    if (i != -1) {
-      if (this.cartService.cartItems[i].count == 1) {
-        this.cartService.cartItems.splice(i, 1);
-      } else {
-        this.cartService.cartItems[i].count -= 1;
-      }
-      // this.cartService.cartChanged.next(this.cartService.cartItems);
-      this.calculateSumOfCart();
-    }
+    this.cartService.deleteFromCart(item);
+    this.calculateSumOfCart();
   }
 
   onAddToCart(item: Item) {
-    let i = this.cartService.cartItems.findIndex(
-      (cartItem) => item.title == cartItem.cartItem.title && item.price == cartItem.cartItem.price
-    );
-    if (i == -1) {
-      this.cartService.cartItems.push({ cartItem: item, count: 1 });
-    } else {
-      this.cartService.cartItems[i].count += 1;
-    }
-    // this.cartService.cartChanged.next(this.cartService.cartItems);
+    this.cartService.addToCart(item);
     this.calculateSumOfCart();
   }
 

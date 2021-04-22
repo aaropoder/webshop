@@ -19,7 +19,6 @@ export class EditItemComponent implements OnInit, OnDestroy {
     private location: Location
   ) {}
 
-  // item: Item | undefined (või tühi)
   item!: Item;
   editItemForm!: FormGroup;
   id!: number;
@@ -30,15 +29,15 @@ export class EditItemComponent implements OnInit, OnDestroy {
   itemsObservable!: Subscription;
 
   ngOnInit(): void {
-    // this.categoriesObservable = this.categoruServoce.getCategories....
+    //this.getCategoriesFromDatabase();
+    this.getItemsFromDatabase();
+  }
 
-    this.id = Number(this.activatedRoute.snapshot.paramMap.get('itemId'));
-    let item = this.itemService.items.find((item) => item.barcode == this.id);
-    if (item) {
-      this.item = item;
-      this.barcode = item.barcode;
-    }
+  getCategoriesFromDatabase() {
+    // this.categoriesObservabele = this.category
+  }
 
+  getItemsFromDatabase() {
     this.itemsObservable = this.itemService.getItemsFromDatabase().subscribe((itemsFromDatabase) => {
       this.items = [];
       this.itemService.items = [];
@@ -47,8 +46,21 @@ export class EditItemComponent implements OnInit, OnDestroy {
         this.items.push(element);
         this.itemService.items.push(element);
       }
+      this.findItemFromService();
+      this.fillFormWithValues();
     });
+  }
 
+  findItemFromService() {
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get('itemId'));
+    let item = this.itemService.items.find((item) => item.barcode == this.id);
+    if (item) {
+      this.item = item;
+      this.barcode = item.barcode;
+    }
+  }
+
+  fillFormWithValues() {
     this.editItemForm = new FormGroup({
       title: new FormControl(this.item.title),
       price: new FormControl(this.item.price),
@@ -81,7 +93,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
         form.value.barcode,
         form.value.producer,
         form.value.description,
-        form.value.isActive
+        form.value.isActive,
+        0
       );
 
       let itemID = this.itemService.items.findIndex((item) => item.barcode == this.id);
@@ -89,7 +102,6 @@ export class EditItemComponent implements OnInit, OnDestroy {
       if (itemID != -1) {
         this.itemService.items[itemID] = item;
         this.itemService.saveItemsToDatabase().subscribe(() => this.router.navigateByUrl('/admin/view-items'));
-        // setTimeout(() => {}, 200);
       }
     }
   }
